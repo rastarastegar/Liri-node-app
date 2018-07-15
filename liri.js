@@ -32,7 +32,7 @@ function twitterRequest() {
         }
     });
 }
-// twitterRequest(); // Is this neccessary? (yes it is)
+twitterRequest();               // Is this neccessary? (yes it is)
 
 // Spotify Request Function
 function spotifyRequest() {
@@ -65,31 +65,46 @@ function spotifyRequest() {
 
     });
 }
-// spotifyRequest();
+spotifyRequest();
 
 
 // Movie Request Function
 function movieRequest(movieName) {
-    const queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=" + triologyomdbkey;
+    const queryUrl = "https://www.omdbapi.com/?apikey=" + triologyomdbkey + "&plot=short&y=&tomatoes=&t=" + movieName;
 
     request(queryUrl, function (error, response, body) {
 
         if (!error && response.statusCode === 200) {
 
             console.log("----------Movie Information----------" +
-                "\nTitle: " + JSON.parse(body).Title +
-                "\n  Release Year: " + JSON.parse(body).Year +
+                "\n  Title: " + JSON.parse(body).Title +
                 "\n  Actors: " + JSON.parse(body).Actors +
-                "\n  Rated: " + JSON.parse(body).Rated +
+                "\n  Release Year: " + JSON.parse(body).Year +
                 "\n  Language: " + JSON.parse(body).Language +
+                "\n  Rated: " + JSON.parse(body).Rated +
                 "\n  Country: " + JSON.parse(body).Country +
                 "\n  plot: " + JSON.parse(body).Plot)
         } else {
-            console.log(error)
-            console.log(response.statusCode)
+            console.log(error);
+            console.log(response.statusCode);
         }
     })
 }
 
 movieRequest(movieName);
 
+// const request = process.argv[2];
+
+// switch (request) {
+//     case "spotify-this-song":
+//         spotifyRequest();
+//         break;
+//     case "movie-this":
+//         movieRequest();
+//         break;
+//     case "my-tweets":
+//         twitterRequest();
+//         break;
+//     case "do-what-it-says":
+//         randomRequest();
+// };
