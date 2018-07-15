@@ -4,7 +4,7 @@ const nev = require("dotenv").config();
 const keys = require("./keys");
 const fs = require("fs");
 const Spotify = require('node-spotify-api');
-const  Twitter = require('twitter'); // from npm instruction
+const Twitter = require('twitter'); // from npm instruction
 
 
 // getting access to keys for spotify and twitter 
@@ -39,14 +39,32 @@ twitterRequest(); // Is this neccessary? (yes it is)
 // Spotify Request 
 function spotifyRequest() {
 
-     var spotify = new Spotify(keys.spotify);
+    var spotify = new Spotify(keys.spotify);
 
-    spotify.search({ type: 'track', query: 'All the Small Things' }, function (err, data) {
+    spotify.search({ type: 'track', query: song }, function (err, data) {
         if (err) {
             return console.log('Error occurred: ' + err);
         }
 
-        console.log(data);
+        console.log("*************this is parse**********")
+        // console.log(JSON.parse(data));
+        console.log("*************this is stringify**********")
+        // console.log(JSON.stringify(data, null, 2));
+        data.tracks.items.forEach(function (element) {
+            console.log("*************Song's Name**********")
+            console.log(element.name);
+
+            console.log("*************Artists Name**********")
+            element.artists.forEach(function (element) {
+                console.log(element.name + "    ")
+
+            })
+
+            console.log("*************Song's URL**********")
+            console.log(element.external_urls.spotify + "\n----------");
+
+        })
+
     });
 }
-spotifyRequest()
+spotifyRequest();
