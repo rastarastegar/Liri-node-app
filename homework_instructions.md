@@ -158,6 +158,10 @@ require("dotenv").config();
 
    * Step Four: On the next screen, scroll down to where you see your client id and client secret. Copy these values down somewhere, you'll need them to use the Spotify API and the [node-spotify-api package](https://www.npmjs.com/package/node-spotify-api).
 
+// run the "npm instal request"
+// this is like Ajax call but  for node.js
+// this helps making request to 
+
 3. `node liri.js movie-this '<movie name here>'`
 
    * This will output the following information to your terminal/bash window:

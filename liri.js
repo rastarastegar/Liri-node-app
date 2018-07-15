@@ -5,6 +5,7 @@ const keys = require("./keys");
 const fs = require("fs");
 const Spotify = require('node-spotify-api');
 const Twitter = require('twitter'); // from npm instruction
+const request = require("request");
 
 
 // getting access to keys for spotify and twitter 
@@ -14,13 +15,12 @@ const triologyomdbkey = "triology"
 
 //Set defaults
 var song = "The Sign by Ace of Base";
-var movie = "Mr. Nobody";
+var movieName = "Mr. Nobody";
 var defaultMovieMessage = "If you haven't watched 'Mr. Nobody,' then you should:"
-
 
 // ********Now functions*********
 
-//Function that sends request to Twitter from npm instruction
+//Twitter Request Function
 function twitterRequest() {
 
     var params = { screen_name: 'Reza03583634', count: 20 };
@@ -32,11 +32,9 @@ function twitterRequest() {
         }
     });
 }
-twitterRequest(); // Is this neccessary? (yes it is)
+// twitterRequest(); // Is this neccessary? (yes it is)
 
-
-
-// Spotify Request 
+// Spotify Request Function
 function spotifyRequest() {
 
     var spotify = new Spotify(keys.spotify);
@@ -67,4 +65,31 @@ function spotifyRequest() {
 
     });
 }
-spotifyRequest();
+// spotifyRequest();
+
+
+// Movie Request Function
+function movieRequest(movieName) {
+    const queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=" + triologyomdbkey;
+
+    request(queryUrl, function (error, response, body) {
+
+        if (!error && response.statusCode === 200) {
+
+            console.log("----------Movie Information----------" +
+                "\nTitle: " + JSON.parse(body).Title +
+                "\n  Release Year: " + JSON.parse(body).Year +
+                "\n  Actors: " + JSON.parse(body).Actors +
+                "\n  Rated: " + JSON.parse(body).Rated +
+                "\n  Language: " + JSON.parse(body).Language +
+                "\n  Country: " + JSON.parse(body).Country +
+                "\n  plot: " + JSON.parse(body).Plot)
+        } else {
+            console.log(error)
+            console.log(response.statusCode)
+        }
+    })
+}
+
+movieRequest(movieName);
+
